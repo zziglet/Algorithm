@@ -1,0 +1,75 @@
+## 문제
+![](https://velog.velcdn.com/images/zziglet/post/78e4e453-b0d1-4764-9337-37f242d9694a/image.png)
+
+## 문제 이해
+0 이상의 정수를 저장하는 스택 구현
+
+- push X
+- pop : 가장 위에 있는 정수 pop, 그 수 출력, 없다면 -1 출력
+- size : 정수 개수 출력
+- empty : 비어있으면 1, 아니면 0 출력
+- top : 가장 위에 있는 정수 출력, 없다면 -1 출력
+
+
+- 입력 : 명령 개수 후 명령 입력 (정수 범위 1 ~ 100,000)
+- 출력 : 한 줄에 하나씩 명령 결과 출력(정수 하나)
+## 문제 접근
+- 명령어 개수만큼 문자열 ArrayList 생성
+(배열로 구현하려고 하니 array exception 발생)
+- stack은 Integer ArrayList로 구현
+- 각 문자열에 따라서 출력 내용 생성
+- 출력용 Integer ArrayList로 구현
+- 각 기능에 맞게 switch-case로 구현
+
+## 내 풀이
+```
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int num = scan.nextInt();
+        ArrayList<String> inst = new ArrayList<>();
+        ArrayList<Integer> stack = new ArrayList<>();
+        ArrayList<Integer> print = new ArrayList<>();
+        scan.nextLine();
+        for(int i=0; i<num; i++){
+            inst.add(scan.nextLine());
+        }
+        for(int i=0; i<num; i++){
+            String[] info = inst.get(i).split(" ");
+            switch (info[0]) {
+                case "push":
+                    stack.add(Integer.parseInt(info[1]));
+                    break;
+                case "pop":
+                    if (stack.isEmpty())
+                        print.add(-1);
+                    else{
+                        print.add(stack.get(stack.size()-1));
+                        stack.remove(stack.size()-1);
+                    }
+                    break;
+                case "size":
+                    print.add(stack.size());
+                    break;
+                case "empty":
+                    if (stack.isEmpty())
+                        print.add(1);
+                    else
+                        print.add(0);
+                    break;
+                case "top":
+                    if (stack.isEmpty())
+                        print.add(-1);
+                    else
+                        print.add(stack.get(stack.size() -1));
+                    break;
+            }
+
+        }
+        for (Integer integer : print) System.out.println(integer);
+    }
+}
+```
